@@ -267,3 +267,5 @@ endfunction
 if filereadable(expand('~/.vimrc_local'))
   source ~/.vimrc_local
 end
+
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
