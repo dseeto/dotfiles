@@ -1,0 +1,65 @@
+alias cls="clear"
+
+alias cd.="cd .."
+alias cd2.="cd ../.."
+alias cd3.="cd ../../.."
+alias cd4.="cd ../../../.."
+alias cd5.="cd ../../../../.."
+alias cd6.="cd ../../../../../.."
+
+alias g="git"
+alias gt="git status"
+alias gd="git diff"
+alias gh="git hist -20"
+alias gc="git commit -a"
+alias gr="git reset"
+alias gs="git status"
+alias gl="git log"
+
+alias bi="bundle install"
+alias be="bundle exec"
+
+alias sourcebash="source ~/.bash_login"
+
+alias textedit="open -a TextEdit"
+alias openx="open . -a xcode"
+
+alias podn="pod --no-repo-update"
+
+case "$(uname)" in
+    Linux) alias ls='ls -F --color=auto';;
+    *) alias ls='ls -FG';;
+esac
+alias la='ls -a'
+alias ll='ls -alh'
+
+pbpush () {
+  pbpaste  | ssh $1 'pbcopy'
+}
+
+ressh() {
+  for agent_sock in /tmp/ssh-*/agent.*; do
+    export SSH_AUTH_SOCK=${agent_sock}
+    if ssh-add -l &> /dev/null; then
+      echo "export SSH_AUTH_SOCK=${agent_sock}"
+    fi
+  done
+}
+
+alias print256colors='(x=`tput op` y=`printf %80s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done)'
+alias fixtmux="pkill -SIGWINCH -f tmux"
+alias top='top -o cpu'
+
+if [ -f /Applications/Emacs.app/Contents/MacOS/Emacs ]; then
+  alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
+fi
+
+alias npm-exec='env PATH="$(npm bin):$PATH"'
+alias ne='npm-exec'
+alias nvnuke='[ -e .nvmrc ] && nvm deactivate && nvm uninstall "$(cat .nvmrc)" && nvm install && rm -rf ./node_modules && npm install'
+
+
+case "$(uname)" in
+  Linux) alias psg='ps -eo pid,user,start_time,cmd --sort -etime | fgrep -v "grep" | grep -E';;
+  *)     alias psg='ps -eo pid,user,start,command | fgrep -v "grep" | grep -E';;
+esac
