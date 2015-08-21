@@ -15,6 +15,7 @@ alias gc="git commit -a"
 alias gr="git reset"
 alias gs="git status"
 alias gl="git log"
+alias gp="git branch --merged | grep -v "\*" | grep -v "master" | xargs -n 1 git branch -d"
 
 alias bi="bundle install"
 alias be="bundle exec"
