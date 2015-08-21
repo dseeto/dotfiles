@@ -129,5 +129,6 @@ _rake () {
 compdef _rake rake
 
 source ~/.aliases
+source ~/.profile
 
 [[ -s ~/.zshrc_personal ]] && source ~/.zshrc_personal
