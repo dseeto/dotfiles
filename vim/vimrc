@@ -36,6 +36,8 @@ set ignorecase
 set smartcase
 set wildignore+=*.pyc,*.o,*.class,*.lo,.git,vendor/*,node_modules/**,bower_components/**
 set tags+=gems.tags
+set cursorline
+set cursorcolumn
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
