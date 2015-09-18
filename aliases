@@ -25,6 +25,8 @@ alias sourcebash="source ~/.bash_login"
 alias textedit="open -a TextEdit"
 alias openx="open . -a xcode"
 
+alias rmpgpid="rm /usr/local/var/postgres/postmaster.pid"
+
 alias podn="pod --no-repo-update"
 
 case "$(uname)" in
