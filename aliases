@@ -19,6 +19,7 @@ alias gp="git fetch origin && git branch --merged | grep -v '*' | xargs git bran
 
 alias bi="bundle install"
 alias be="bundle exec"
+alias dbdo="pkill -f rails; rake db:drop db:create && rm -f db/schema.rb && rake db:migrate && sleep 1 && rake db:seed db:test:prepare"
 
 alias sourcebash="source ~/.bash_login"
 
