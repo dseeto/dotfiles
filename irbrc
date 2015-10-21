@@ -35,3 +35,8 @@ module LocalMethods
 end
 
 Object.class_eval { include LocalMethods }
+
+# Store irb history
+require 'irb/ext/save-history'
+IRB.conf[:SAVE_HISTORY] = 200
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb-history"
