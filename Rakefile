@@ -7,7 +7,7 @@ task :activate do
   dot_files = Dir.glob(File.join(working_dir,"*"))
 
   dot_files.each do |filename|
-    next if filename =~ /Rakefile/ || filename =~ /README\.txt$/ || filename =~ /vim/
+    next if filename =~ /Rakefile/ || filename =~ /README\.txt$/ || filename =~ /^vim/
 
     sym_link = File.join(home_dir,".#{File.basename(filename)}")
     rm_rf(sym_link) if File.symlink?(sym_link) || File.exist?(sym_link)
