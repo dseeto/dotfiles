@@ -14,6 +14,7 @@
   cur = log --pretty=format:'%ad %h %d' --abbrev-commit --date=short -1
   ls = ls-files
   pr = pull --rebase
+  am = commit --amend --no-edit
 
   # show difference between the HEAD and the index
   staged = diff --cached
