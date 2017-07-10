@@ -15,6 +15,7 @@
   ls = ls-files
   pr = pull --rebase
   am = commit --amend --no-edit
+  cob = "!git checkout -b $1 && git push -u origin"
 
   # show difference between the HEAD and the index
   staged = diff --cached
@@ -31,7 +32,12 @@
 [core]
   autocrlf = input
   excludesfile = ~/.gitignore
+	precomposeunicode = false
+[user]
+	name = David Seeto
+	email = seeto.david@gmail.com
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
 	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

@@ -15,7 +15,6 @@ alias gc="git commit -a"
 alias gr="git reset"
 alias gs="git status"
 alias gl="git log"
-alias gp="git fetch origin && git branch --merged | grep -v '*' | xargs git branch -d"
 
 alias bi="bundle install"
 alias be="bundle exec"
@@ -67,3 +66,23 @@ case "$(uname)" in
   Linux) alias psg='ps -eo pid,user,start_time,cmd --sort -etime | fgrep -v "grep" | grep -E';;
   *)     alias psg='ps -eo pid,user,start,command | fgrep -v "grep" | grep -E';;
 esac
+
+###### Git Prune ######
+remote_branches () {
+  git branch -l -a | grep --color=never 'remotes/origin' | tr -d '* ' | grep -v HEAD | sed 's/remotes\/origin\///'
+}
+
+local_branches_with_tracking () {
+  git remote show origin | grep 'merges with remote' | awk '{print $1}'
+}
+
+gitp() {
+  git fetch --prune 2>/dev/null
+
+  count=0
+  for branch in $(diff --new-line-format='' --unchanged-line-format='' <(local_branches_with_tracking) <(remote_branches)) ; do
+    git branch -D $branch
+    count=$(echo $((count + 1)))
+  done
+}
+######################
