@@ -37,7 +37,6 @@ Plug 'pitluga/vimux-nose-test'
 Plug 'plasticboy/vim-markdown'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
 Plug 'tfnico/vim-gradle'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-classpath'
@@ -56,6 +55,7 @@ Plug 'vim-scripts/Align'
 Plug 'vim-scripts/VimClojure'
 Plug 'vim-scripts/mako.vim'
 Plug 'vim-scripts/matchit.zip'
+Plug 'w0rp/ale'
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local

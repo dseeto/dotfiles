@@ -151,9 +151,41 @@ let g:vim_markdown_folding_disabled = 1
 
 let g:jsx_ext_required = 0
 
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args='--max-line-length=100 --ignore=E266'
+"""
+""" ALE syntax checking
+"""
+
+let g:ale_enabled = 1
+
+" visual options
+let g:ale_sign_column_always = 1
+let g:ale_sign_warning = '✋'
+let g:ale_sign_error = '🚫'
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+" Linting options
+let g:ale_linters = {
+\   'javascript': ['eslint', 'flow'],
+\   'jsx': ['eslint', 'flow'],
+\   'python': ['flake8'],
+\   'ruby': ['ruby', 'rubocop'],
+\   'hcl': [],
+\}
+" Only lint on save or when switching back to normal mode, not every keystroke in insert mode
+let g:ale_lint_on_text_changed = 'normal'
+
+" Fixer options
+let g:ale_fixers = {
+\   'javascript': ['prettier', 'remove_trailing_lines'],
+\   'ruby': ['rubocop', 'remove_trailing_lines'],
+\}
+let g:ale_fix_on_save = 1
+
+" language-specific options
+let g:ale_javascript_prettier_options = ' --parser babylon --single-quote --jsx-bracket-same-line --trailing-comma es5 --print-width 100'
+let g:ale_javascript_flow_executable = './dev-scripts/flow-proxy.sh'
 
 " ========= Shortcuts ========
 
