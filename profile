@@ -1,2 +1,6 @@
-for f in ~/.*.local; do source $f; done
+[ -f ~/.alias.local ] && source ~/.alias.local
+[ -f ~/.bashrc.local ] && source ~/.bashrc.local
+[ -f ~/.profile.local ] && source ~/.profile.local
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
 eval "$(pyenv init -)"
