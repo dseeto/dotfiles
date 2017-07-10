@@ -277,8 +277,8 @@ endfunction
 "any settings in this file.
 ""
 "NOTE: YOU MAY NOT WANT TO ADD ANY LINES BELOW THIS
-if filereadable(expand('~/.vimrc_local'))
-  source ~/.vimrc_local
+if filereadable(expand('~/.vimrc.local'))
+  source ~/.vimrc.local
 end
 
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
