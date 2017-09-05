@@ -65,16 +65,13 @@ augroup END
 " File Types
 
 autocmd FileType php setlocal tabstop=4 shiftwidth=4 softtabstop=4
-autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
 autocmd FileType java setlocal tabstop=4 shiftwidth=4 softtabstop=4
 autocmd FileType cs setlocal tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2
-
 autocmd FileType tex setlocal textwidth=78
 autocmd BufNewFile,BufRead *.txt setlocal textwidth=78
 
-autocmd FileType ruby runtime ruby_mappings.vim
-autocmd FileType python runtime python_mappings.vim
+filetype plugin on
 
 if version >= 700
     autocmd BufNewFile,BufRead *.txt setlocal spell spelllang=en_us
