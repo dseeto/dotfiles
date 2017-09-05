@@ -125,9 +125,11 @@ let g:no_html_toolbar = 'yes'
 
 let coffee_no_trailing_space_error = 1
 
+" NERDTree
 let NERDTreeIgnore=['\.pyc', '\.o', '\.class', '\.lo']
 let NERDTreeHijackNetrw = 0
 
+" netrw
 let g:netrw_banner = 0
 
 let g:VimuxUseNearestPane = 1
@@ -188,9 +190,9 @@ map <silent> <LocalLeader>nr :NERDTree<CR>
 map <silent> <LocalLeader>nf :NERDTreeFind<CR>
 
 " CtrlP
-map <silent> <leader>ff :CtrlP<CR>
-map <silent> <leader>fr :CtrlPClearCache<CR>
-map <silent> <leader>fb :CtrlPBuffer<CR>
+map <silent> <LocalLeader>ff :CtrlP<CR>
+map <silent> <LocalLeader>fr :CtrlPClearCache<CR>
+map <silent> <LocalLeader>fb :CtrlPBuffer<CR>
 
 " Ack
 map <LocalLeader>aw :Ack '<C-R><C-W>'
@@ -259,13 +261,13 @@ function! GitGrepWord()
   echo 'Number of matches: ' . len(getqflist())
 endfunction
 command! -nargs=0 GitGrepWord :call GitGrepWord()
-nnoremap <silent> <Leader>gw :GitGrepWord<CR>
+nnoremap <silent> <LocalLeader>gw :GitGrepWord<CR>
 
 function! Trim()
   %s/\s*$//
 endfunction
 command! -nargs=0 Trim :call Trim()
-nnoremap <silent> <Leader>cw :Trim<CR>
+nnoremap <silent> <LocalLeader>cw :Trim<CR>
 
 function! StartInferiorSlimeServer()
   let g:__InferiorSlimeRunning = 1
@@ -279,7 +281,7 @@ function! __Edge()
 
   set ttyfast
 
-  map <leader>nf :e%:h<CR>
+  map <LocalLeader>nf :e%:h<CR>
   map <C-p> :CommandT<CR>
 
   let g:VimuxOrientation = "h"
