@@ -11,10 +11,6 @@ if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
 endif
 
-if filereadable(expand("/etc/vim/vimrc.bundles"))
-  source /etc/vim/vimrc.bundles
-endif
-
 
 " ========= Options ========
 
