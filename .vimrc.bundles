@@ -4,7 +4,6 @@ end
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'benmills/vim-commadown'
 Plug 'benmills/vimux'
 Plug 'bkad/CamelCaseMotion'
 Plug 'braintreeps/puppet-syntax-vim'
