@@ -104,6 +104,28 @@ set statusline+=%P                        " percentage of file
 
 " ========= Plugin Options ========
 
+" NERDTree
+let NERDTreeIgnore=['\.pyc', '\.o', '\.class', '\.lo']
+let NERDTreeHijackNetrw = 0
+
+" netrw
+let g:netrw_banner = 0
+
+" fzf.vim
+let g:fzf_colors =
+      \ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
 let g:AckAllFiles = 0
 let g:AckCmd = 'ack --type-add ruby=.feature --ignore-dir=tmp 2> /dev/null'
 
@@ -120,27 +142,11 @@ let g:gist_detect_filetype = 1
 
 let g:rubycomplete_buffer_loading = 1
 
-
 let g:no_html_toolbar = 'yes'
 
 let coffee_no_trailing_space_error = 1
 
-" NERDTree
-let NERDTreeIgnore=['\.pyc', '\.o', '\.class', '\.lo']
-let NERDTreeHijackNetrw = 0
-
-" netrw
-let g:netrw_banner = 0
-
 let g:VimuxUseNearestPane = 1
-
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:15,results:15'
-let g:ctrlp_prompt_mappings = {
-  \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
-  \ 'PrtSelectMove("k")':   ['<c-p>','<c-k>', '<up>'],
-  \ 'PrtHistory(-1)':       ['<c-j>'],
-  \ 'PrtHistory(1)':        ['<c-k>'],
-  \ }
 
 let g:vim_markdown_folding_disabled = 1
 
@@ -189,10 +195,8 @@ map <silent> <LocalLeader>nt :NERDTreeToggle<CR>
 map <silent> <LocalLeader>nr :NERDTree<CR>
 map <silent> <LocalLeader>nf :NERDTreeFind<CR>
 
-" CtrlP
-map <silent> <LocalLeader>ff :CtrlP<CR>
-map <silent> <LocalLeader>fr :CtrlPClearCache<CR>
-map <silent> <LocalLeader>fb :CtrlPBuffer<CR>
+" fzf
+nmap <C-p> :FZF<CR>
 
 " Ack
 map <LocalLeader>aw :Ack '<C-R><C-W>'
@@ -307,5 +311,3 @@ endfunction
 if filereadable(expand('~/.vimrc.local'))
   source ~/.vimrc.local
 end
-
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
