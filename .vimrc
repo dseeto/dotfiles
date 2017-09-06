@@ -34,6 +34,7 @@ set wildignore+=*.pyc,*.o,*.class,*.lo,.git,vendor/*,node_modules/**,bower_compo
 set tags+=gems.tags
 set cursorline
 set cursorcolumn
+set lazyredraw
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
@@ -236,6 +237,12 @@ map <silent> <LocalLeader>ws :highlight clear ExtraWhitespace<CR>
 
 " Pasting over a selection does not replace the clipboard
 xnoremap <expr> p 'pgv"'.v:register.'y'
+
+" Navigation
+map <C-H> <C-W>h
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
 
 " ========= Insert Shortcuts ========
 
