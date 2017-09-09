@@ -14,13 +14,14 @@ endif
 
 " ========= Options ========
 
-compiler ruby
-syntax on
+if !exists("g:syntax_on")
+  syntax enable
+endif
+
 set hlsearch
 set number
 set showmatch
 set incsearch
-set background=dark
 set hidden
 set backspace=indent,eol,start
 set textwidth=0 nosmartindent tabstop=2 shiftwidth=2 softtabstop=2 expandtab
@@ -35,31 +36,60 @@ set tags+=gems.tags
 set cursorline
 set cursorcolumn
 set lazyredraw
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
 
 if version >= 703
   set undodir=~/.vim/undodir
   set undofile
-  set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+  set undoreload=10000
 endif
-set undolevels=1000 "maximum number of changes that can be undone
+set undolevels=1000
 
-" Color
+
+" ========= Colors ========
+
 colorscheme vibrantink
 
 au FileType diff colorscheme desert
 au FileType git colorscheme desert
 au BufWinLeave * colorscheme vibrantink
 
+" Highlight too-long lines
+highlight LineLengthError ctermbg=red guibg=red
+autocmd ColorScheme * highlight LineLengthError ctermbg=red guibg=red
+autocmd BufRead,InsertEnter,InsertLeave * match LineLengthError /\%100v.*/
+
+" Highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+augroup WhitespaceMatch
+  " Remove ALL autocommands for the WhitespaceMatch group.
+  autocmd!
+  autocmd BufWinEnter * let w:whitespace_match_number =
+        \ matchadd('ExtraWhitespace', '\s\+$')
+  autocmd InsertEnter * call s:ToggleWhitespaceMatch('i')
+  autocmd InsertLeave * call s:ToggleWhitespaceMatch('n')
+augroup END
+function! s:ToggleWhitespaceMatch(mode)
+  let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
+  if exists('w:whitespace_match_number')
+    call matchdelete(w:whitespace_match_number)
+    call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
+  else
+    " Something went wrong, try to be graceful.
+    let w:whitespace_match_number =  matchadd('ExtraWhitespace', pattern)
+  endif
+endfunction
+
+" Autoremove trailing spaces when saving the buffer
+autocmd FileType c,cpp,elixir,eruby,html,java,javascript,php,ruby autocmd BufWritePre <buffer> :%s/\s\+$//e
+
+
+" ========= Filetypes========
+
 augroup markdown
   au!
   au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
-
-" File Types
 
 autocmd FileType php setlocal tabstop=4 shiftwidth=4 softtabstop=4
 autocmd FileType java setlocal tabstop=4 shiftwidth=4 softtabstop=4
@@ -75,37 +105,62 @@ if version >= 700
     autocmd FileType tex setlocal spell spelllang=en_us
 endif
 
-" Highlight trailing whitespace
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
 
-" Autoremove trailing spaces when saving the buffer
-autocmd FileType c,cpp,elixir,eruby,html,java,javascript,php,ruby autocmd BufWritePre <buffer> :%s/\s\+$//e
+" ========= Shortcuts ========
 
-" Highlight too-long lines
-autocmd BufRead,InsertEnter,InsertLeave * 2match LineLengthError /\%126v.*/
-highlight LineLengthError ctermbg=black guibg=black
-autocmd ColorScheme * highlight LineLengthError ctermbg=black guibg=black
+" Refresh ctags
+map <silent> <LocalLeader>rt :!ctags -R --exclude=".git\|.svn\|log\|tmp\|db\|pkg" --extra=+f --langmap=Lisp:+.clj<CR>
 
-" Set up highlight group & retain through colorscheme changes
-highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+" Open git diff
+map <silent> <LocalLeader>gd :e product_diff.diff<CR>:%!git diff<CR>:setlocal buftype=nowrite<CR>
 
-" Status
-set laststatus=2
-set statusline=
-set statusline+=%<\                       " cut at start
-set statusline+=%2*[%n%H%M%R%W]%*\        " buffer number, and flags
-set statusline+=%-40f\                    " relative path
-set statusline+=%=                        " seperate between right- and left-aligned
-set statusline+=%1*%y%*%*\                " file type
-set statusline+=%10(L(%l/%L)%)\           " line
-set statusline+=%2(C(%v/125)%)\           " column
-set statusline+=%P                        " percentage of file
+" Turn off trailing whitespace highlighting
+map <silent> <LocalLeader>ws :highlight clear ExtraWhitespace<CR>
+
+cnoremap <Tab> <C-L><C-D>
+nnoremap <silent> k gk
+nnoremap <silent> j gj
+nnoremap <silent> Y y$
+
+" Pasting over a selection does not replace the clipboard
+xnoremap <expr> p 'pgv"'.v:register.'y'
+
+" Navigation
+map <C-H> <C-W>h
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
+
+" NOP on arrow kets
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+" Insert rocket in insert mode
+imap <C-L> <SPACE>=><SPACE>
+
 
 " ========= Plugin Options ========
 
+" TComment
+map <silent> <LocalLeader>cc :TComment<CR>
+
+" Vimux
+map <silent> <LocalLeader>rl :wa<CR> :VimuxRunLastCommand<CR>
+map <silent> <LocalLeader>vi :wa<CR> :VimuxInspectRunner<CR>
+map <silent> <LocalLeader>vk :wa<CR> :VimuxInterruptRunner<CR>
+map <silent> <LocalLeader>vx :wa<CR> :VimuxClosePanes<CR>
+map <silent> <LocalLeader>vp :VimuxPromptCommand<CR>
+vmap <silent> <LocalLeader>vs "vy :call VimuxRunCommand(@v)<CR>
+nmap <silent> <LocalLeader>vs vip<LocalLeader>vs<CR>
+map <silent> <LocalLeader>ds :call VimuxRunCommand('clear; grep -E "^ *describe[ \(]\|^ *context[ \(]\|^ *it[ \(]" ' . bufname("%"))<CR>
+
 " NERDTree
+map <silent> <LocalLeader>nt :NERDTreeToggle<CR>
+map <silent> <LocalLeader>nr :NERDTree<CR>
+map <silent> <LocalLeader>nf :NERDTreeFind<CR>
+
 let NERDTreeIgnore=['\.pyc', '\.o', '\.class', '\.lo']
 let NERDTreeHijackNetrw = 0
 
@@ -113,6 +168,7 @@ let NERDTreeHijackNetrw = 0
 let g:netrw_banner = 0
 
 " fzf.vim
+nmap <C-p> :FZF<CR>
 let g:fzf_colors =
       \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -153,6 +209,10 @@ let g:vim_markdown_folding_disabled = 1
 
 let g:jsx_ext_required = 0
 
+" airline
+let g:airline_theme = 'wombat'
+
+
 """
 """ ALE syntax checking
 """
@@ -189,62 +249,7 @@ let g:ale_fix_on_save = 1
 let g:ale_javascript_prettier_options = ' --parser babylon --single-quote --jsx-bracket-same-line --trailing-comma es5 --print-width 100'
 let g:ale_javascript_flow_executable = './dev-scripts/flow-proxy.sh'
 
-" ========= Shortcuts ========
-
-" NERDTree
-map <silent> <LocalLeader>nt :NERDTreeToggle<CR>
-map <silent> <LocalLeader>nr :NERDTree<CR>
-map <silent> <LocalLeader>nf :NERDTreeFind<CR>
-
-" fzf
-nmap <C-p> :FZF<CR>
-
-" Ack
-map <LocalLeader>aw :Ack '<C-R><C-W>'
-
-" TComment
-map <silent> <LocalLeader>cc :TComment<CR>
-map <silent> <LocalLeader>uc :TComment<CR>
-
-" Vimux
-map <silent> <LocalLeader>rl :wa<CR> :VimuxRunLastCommand<CR>
-map <silent> <LocalLeader>vi :wa<CR> :VimuxInspectRunner<CR>
-map <silent> <LocalLeader>vk :wa<CR> :VimuxInterruptRunner<CR>
-map <silent> <LocalLeader>vx :wa<CR> :VimuxClosePanes<CR>
-map <silent> <LocalLeader>vp :VimuxPromptCommand<CR>
-vmap <silent> <LocalLeader>vs "vy :call VimuxRunCommand(@v)<CR>
-nmap <silent> <LocalLeader>vs vip<LocalLeader>vs<CR>
-map <silent> <LocalLeader>ds :call VimuxRunCommand('clear; grep -E "^ *describe[ \(]\|^ *context[ \(]\|^ *it[ \(]" ' . bufname("%"))<CR>
-
-map <silent> <LocalLeader>rt :!ctags -R --exclude=".git\|.svn\|log\|tmp\|db\|pkg" --extra=+f --langmap=Lisp:+.clj<CR>
-
-map <silent> <LocalLeader>cj :!clj %<CR>
-
-map <silent> <LocalLeader>gd :e product_diff.diff<CR>:%!git diff<CR>:setlocal buftype=nowrite<CR>
-map <silent> <LocalLeader>pd :e product_diff.diff<CR>:%!svn diff<CR>:setlocal buftype=nowrite<CR>
-
-map <silent> <LocalLeader>nh :nohls<CR>
-
-map <silent> <LocalLeader>bd :bufdo :bd<CR>
-
-cnoremap <Tab> <C-L><C-D>
-
-nnoremap <silent> k gk
-nnoremap <silent> j gj
-nnoremap <silent> Y y$
-
-map <silent> <LocalLeader>ws :highlight clear ExtraWhitespace<CR>
-
-" Pasting over a selection does not replace the clipboard
-xnoremap <expr> p 'pgv"'.v:register.'y'
-
-" Navigation
-map <C-H> <C-W>h
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-map <C-L> <C-W>l
-
-" Navigation - CamelCaseMotion
+" CamelCaseMotion
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
 map <silent> e <Plug>CamelCaseMotion_e
@@ -254,9 +259,6 @@ sunmap b
 sunmap e
 sunmap ge
 
-" ========= Insert Shortcuts ========
-
-imap <C-L> <SPACE>=><SPACE>
 
 " ========= Functions ========
 
@@ -316,15 +318,8 @@ function! __HardMode()
   nmap l <nop>
 endfunction
 
-"-------- Local Overrides
-""If you have options you'd like to override locally for
-"some reason (don't want to store something in a
-""publicly-accessible repository, machine-specific settings, etc.),
-"you can create a '.local_vimrc' file in your home directory
-""(ie: ~/.vimrc_local) and it will be 'sourced' here and override
-"any settings in this file.
-""
-"NOTE: YOU MAY NOT WANT TO ADD ANY LINES BELOW THIS
+
+" ========= Local Overrides ========
 if filereadable(expand('~/.vimrc.local'))
   source ~/.vimrc.local
 end
