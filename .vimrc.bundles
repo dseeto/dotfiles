@@ -10,6 +10,8 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'bogado/file-line'
 Plug 'drewolson/vim_dotfiles', {'rtp': 'vim/bundle/bufexplorer'}
 Plug 'easymotion/vim-easymotion'
+Plug 'felixhummel/setcolors.vim'
+Plug 'flazz/vim-colorschemes'
 Plug 'flowtype/vim-flow'
 Plug 'henrik/vim-indexed-search'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
