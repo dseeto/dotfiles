@@ -36,6 +36,7 @@ set tags+=gems.tags
 set cursorline
 set cursorcolumn
 set lazyredraw
+set colorcolumn=100
 
 if version >= 703
   set undodir=~/.vim/undodir
@@ -53,10 +54,8 @@ au FileType diff colorscheme desert
 au FileType git colorscheme desert
 au BufWinLeave * colorscheme vibrantink
 
-" Highlight too-long lines
-highlight LineLengthError ctermbg=red guibg=red
-autocmd ColorScheme * highlight LineLengthError ctermbg=red guibg=red
-autocmd BufRead,InsertEnter,InsertLeave * match LineLengthError /\%100v.*/
+" Set color for color column for too-long lines
+highlight ColorColumn ctermbg=95
 
 " Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
