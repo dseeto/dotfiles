@@ -4,14 +4,13 @@ end
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'altercation/vim-colors-solarized'
 Plug 'b4b4r07/vim-hcl'
 Plug 'benmills/vimux'
 Plug 'bkad/CamelCaseMotion'
 Plug 'bogado/file-line'
 Plug 'drewolson/vim_dotfiles', {'rtp': 'vim/bundle/bufexplorer'}
 Plug 'easymotion/vim-easymotion'
-Plug 'felixhummel/setcolors.vim'
-Plug 'flazz/vim-colorschemes'
 Plug 'flowtype/vim-flow'
 Plug 'henrik/vim-indexed-search'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
@@ -23,6 +22,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'pgr0ss/vimux-ruby-test'
 Plug 'pitluga/vimux-nose-test'
 Plug 'scrooloose/nerdtree'
+Plug 'tomasr/molokai'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-classpath'
 Plug 'tpope/vim-endwise'

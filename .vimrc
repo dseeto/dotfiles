@@ -48,11 +48,11 @@ set undolevels=1000
 
 " ========= Colors ========
 
-colorscheme vibrantink
+colorscheme molokai
 
 au FileType diff colorscheme desert
 au FileType git colorscheme desert
-au BufWinLeave * colorscheme vibrantink
+au BufWinLeave * colorscheme molokai
 
 " Set color for color column for too-long lines
 highlight ColorColumn ctermbg=95
