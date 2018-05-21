@@ -258,6 +258,9 @@ sunmap b
 sunmap e
 sunmap ge
 
+" Pydiction
+let g:pydiction_location = '~/..vim/plugged/Pydiction/complete-dict'
+
 
 " ========= Functions ========
 
