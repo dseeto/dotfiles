@@ -1,3 +1,5 @@
+echo "sourcing .alisases"
+
 alias cls="clear"
 
 alias cd.="cd .."

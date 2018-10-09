@@ -1,11 +1,10 @@
-autoload -U compinit
-compinit
+echo "sourcing .zshrc"
 
-autoload -U colors
-colors
+export PATH=$PATH:/usr/local/bin
 
-autoload -U select-word-style
-select-word-style bash
+autoload -U compinit && compinit
+autoload -U colors && colors
+autoload -U select-word-style && select-word-style bash
 
 timeout () {
   perl -e 'use Time::HiRes qw( usleep ualarm gettimeofday tv_interval ); ualarm 100000; exec @ARGV' "$@";
@@ -130,5 +129,3 @@ compdef _rake rake
 
 source ~/.aliases
 source ~/.profile
-
-[[ -s ~/.zshrc_personal ]] && source ~/.zshrc_personal
