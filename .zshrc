@@ -6,6 +6,11 @@ autoload -U compinit && compinit
 autoload -U colors && colors
 autoload -U select-word-style && select-word-style bash
 
+# rbenv, pyenv, nodenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualenv-init -)"; fi
+if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
+
 timeout () {
   perl -e 'use Time::HiRes qw( usleep ualarm gettimeofday tv_interval ); ualarm 100000; exec @ARGV' "$@";
 }
