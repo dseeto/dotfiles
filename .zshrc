@@ -1,6 +1,4 @@
-echo "sourcing .zshrc"
-
-export PATH=/usr/local/bin:$PATH
+export PATH=$PATH:/usr/local/bin
 
 autoload -U compinit && compinit
 autoload -U colors && colors
